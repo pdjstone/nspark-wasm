@@ -35,6 +35,12 @@ if (UNIX)
 	add_subdirectory (testprog)
 endif (UNIX)
 
+if (EMSCRIPTEN)
+	set_property(TARGET nspark APPEND_STRING PROPERTY LINK_FLAGS "-sMODULARIZE")
+	set_property(TARGET nspark APPEND_STRING PROPERTY LINK_FLAGS " -s 'EXPORT_NAME=createNSparkModule'")
+	set_property(TARGET nspark APPEND_STRING PROPERTY LINK_FLAGS " -s 'EXPORTED_RUNTIME_METHODS=ccall,callMain,FS'")
+endif (EMSCRIPTEN)
+
 install(FILES ${CMAKE_SOURCE_DIR}/man/nspark.1 DESTINATION share/man/man1)
 install(FILES ${CMAKE_SOURCE_DIR}/man/sqsh.1 DESTINATION share/man/man1)
 install(FILES ${CMAKE_SOURCE_DIR}/man/arcfs.5 DESTINATION share/man/man5)

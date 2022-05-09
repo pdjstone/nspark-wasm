@@ -252,6 +252,7 @@ do_unarc()
 	Word nbytes = 0;
 	int nfiles = 0;
 	Status status;
+	arcfs = 0; // reset to allow re-calling main() 
 
 	ifp = fopen(archive, R_OPENMODE);
 	if (!ifp)

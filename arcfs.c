@@ -135,6 +135,20 @@ rotm(Word load, Word exec)
 
 
 /*
+ * Reset ArcFS static vars
+ */
+void 
+arcfs_init() 
+{
+	arcfs_initialised = 0;
+	arcfs_header header_list = NULL;
+	arcfs_header header_ptr = NULL;
+	Header null_header;
+
+}
+
+
+/*
  * Convert RISC OS time to SPARK time
  */
 

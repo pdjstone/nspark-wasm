@@ -32,5 +32,6 @@ Header *arcfs_read_header(FILE *ifp);
 
 void arcfs_fixtime(Header *hdr);
 
+void arcfs_init();
 
 #endif /* __ARCFS_H */

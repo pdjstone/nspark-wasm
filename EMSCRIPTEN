@@ -2,4 +2,4 @@ source $PATH_TO_EMSDK/emsdk_env.sh
 mkdir build
 cd build
 emcmake cmake ..
-
+emmake cmake --build .

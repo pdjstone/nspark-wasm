@@ -129,6 +129,18 @@ main(int argc, char *argv[])
 	}
 	
 #endif	/* DEBUGGING */
+		unarc = 0;	
+		inffiles = 0;	
+		quiet = 0;		
+		verbose = 0;
+		testing = 0;
+		listing = 0;
+		force = 0;
+		stamp = 1;	
+		to_stdout = 0;
+		retry = 0;
+		apptype = 0;
+		singlecase = 0;
 		ourname = basename(*argv++);
 	
 		/* BB cosmetics for DOS: Strip extention .exe (or .com if

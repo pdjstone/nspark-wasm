@@ -288,8 +288,8 @@ do_unarc()
 
 	if (!quiet && verbose)
 	{
-		msg("filename                          size load/date   exec/time type storage");
-		msg("--------                          ---- ----------- --------- ---- -------");
+		msg("filename                          size load/date   exec/time type storage\n");
+		msg("--------                          ---- ----------- --------- ---- -------\n");
 	}
 
 	/*
@@ -312,6 +312,7 @@ do_unarc()
 				(read_byte(ifp) == 'e') && (read_byte(ifp) == '\0'))
 			{
 				debug("ArcFS format archive\n");
+				arcfs_init();
 				arcfs = 1;
 			}
 			else
@@ -359,7 +360,7 @@ do_unarc()
 			pathname = uplevel();
 			continue;
 		}
-
+		
 		/*
 		 * test for directory or file (file type = &DDC = archive)
 		 */

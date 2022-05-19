@@ -67,7 +67,9 @@ class AsyncQueue {
 
 
 function setupWorker(timeout) {
-  worker = new Worker('nspark-worker.js');
+  let thisUrl = import.meta.url;
+  let basePath = thisUrl.substring(0, thisUrl.lastIndexOf('/'));
+  worker = new Worker(basePath + '/nspark-worker.js');
   setTimeout(() => checkTerminate(timeout), timeout);
 }
 

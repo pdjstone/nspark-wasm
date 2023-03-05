@@ -54,7 +54,7 @@ async function init() {
 
 function notifyFile(path) {
     let f = nsparkModule.FS.analyzePath(path);
-    let buf = f.object.contents.buffer;
+    let buf = f.object.contents.buffer.slice(0, f.object.usedBytes);
     self.postMessage({
         tid: currentTid, 
         item: {

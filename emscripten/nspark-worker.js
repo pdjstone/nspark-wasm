@@ -120,7 +120,6 @@ function doNext() {
         nsparkModule.FS.unlink(currentArchive);
         self.postMessage({tid:tid, done:true, buf:buf}, [buf]);
         let t = performance.now() - start;
-        console.log('worker took ' + t + 'ms');
     }
 }
 

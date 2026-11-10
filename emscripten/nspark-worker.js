@@ -1,5 +1,4 @@
-let buildTag = new URL(self.location).search;
-importScripts('nspark.js' + buildTag);
+importScripts('nspark.js');
 
 let nsparkModule = null;
 let currentTid = 0;
@@ -44,7 +43,7 @@ function capturePrintErr(actionFn, handlerFn) {
 async function init() {
     nsparkModule = await createNSparkModule({
         noInitialRun:true, 
-        locateFile: file => file + buildTag,
+        locateFile: file => file,
         printErr: handlePrintErr,
         print: handlePrint
     });

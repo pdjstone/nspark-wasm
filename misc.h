@@ -32,6 +32,9 @@ char *downlevel(char *filename);
 void print_details(Header *header);
 int inlist(char *filename);
 int append_type(Header *header, char *filename);
+#ifdef __EMSCRIPTEN__
+void latin1_to_utf8(char *buf, size_t size);
+#endif
 
 #ifdef DEBUGGING
 void print_header(Header *header);

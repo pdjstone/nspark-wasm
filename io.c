@@ -59,6 +59,7 @@
 #include "main.h"
 #include "error.h"
 #include "arcfs.h"
+#include "misc.h"
 
 #ifdef RISCOS					/* next line RISC OS only */
 #define isascii(x) 1
@@ -204,7 +205,8 @@ read_header(FILE *ifp)
 	for (i = 0, cptr = header.name; i <= 12; i++, cptr++)
 	{
 		byte = read_byte(ifp);
-#ifdef RISCOS
+#if defined(RISCOS) || defined(__EMSCRIPTEN__)
+		/* Emscripten: kept, and converted to UTF-8 below */
 		if (byte < ' ')
 #else
 		if (byte < ' ' || byte > '~')
@@ -221,6 +223,9 @@ read_header(FILE *ifp)
 			if (isascii(*cptr) && isupper(*cptr))
 				*cptr = tolower(*cptr);
 	}
+#ifdef __EMSCRIPTEN__
+	latin1_to_utf8(header.name, sizeof(header.name));
+#endif
 
 	header.complen = read_word(ifp);
 	header.date = read_halfword(ifp);

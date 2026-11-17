@@ -350,6 +350,41 @@ append_type(Header *header, char *filename)
 	return (-1);
 }
 
+#ifdef __EMSCRIPTEN__
+/*
+ * Convert a file name from RISC OS's character set (Latin-1, one byte per
+ * character) to UTF-8 in place, as the Emscripten FS takes names as UTF-8.
+ * Arculator's HostFS turns each character back into its byte, so names
+ * such as "!Burn<hard space>'Out" come through intact. buf holds size bytes
+ */
+void
+latin1_to_utf8(char *buf, size_t size)
+{
+	size_t len = strlen(buf), extra = 0, i;
+
+	for (i = 0; i < len; i++)
+		if ((Byte) buf[i] >= 0x80)
+			extra++;
+	if (len + extra >= size)
+		return;		/* can't happen with a big enough buffer */
+	buf[len + extra] = '\0';
+	/* From the end, so nothing is overwritten before it's moved */
+	for (i = len; i-- > 0;)
+	{
+		Byte c = (Byte) buf[i];
+
+		if (c >= 0x80)
+		{
+			buf[i + extra] = (char) (0x80 | (c & 0x3f));
+			extra--;
+			buf[i + extra] = (char) (0xc0 | (c >> 6));
+		}
+		else
+			buf[i + extra] = (char) c;
+	}
+}
+#endif /* __EMSCRIPTEN__ */
+
 #ifdef DEBUGGING
 
 /*

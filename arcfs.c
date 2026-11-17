@@ -258,7 +258,12 @@ arcfs_read_header(FILE *ifp)
 			name[j] = read_byte(ifp);
 			if (name[j] == PATHSEP)
 				name[j] = '_';
+#ifdef __EMSCRIPTEN__
+			/* Kept, and converted to UTF-8 below */
+			if (name[j] < ' ')
+#else
 			if (name[j] < ' ' || name[j] > '~')
+#endif
 				name[j] = '\0';
 		}
 		name[j] = '\0';
@@ -296,6 +301,9 @@ arcfs_read_header(FILE *ifp)
 		header_ptr->seek = (info_word & 0x7fffffffL) + data_start;
 		header->comptype = info_byte;
 		strcpy(header->name, (char *) name);
+#ifdef __EMSCRIPTEN__
+		latin1_to_utf8(header->name, sizeof(header->name));
+#endif
 		header->complen = complen;
 		header->date = 0;
 		header->time = 0;

@@ -9,7 +9,8 @@ let unpackQueue = [];
 let printErrHandler = null;
 
 //  filename filesize date filetype stored/compressed
-const LISTING_REGEX = /^([^\s]+)\s+(\d+)\s+(\d+-\w+-\d{4} \d\d:\d\d:\d\d)\s+&(\w+)\s+(\w+)/;
+// (names can hold a hard space, which \s matches, so split on spaces only)
+const LISTING_REGEX = /^([^ ]+) +(\d+)\s+(\d+-\w+-\d{4} \d\d:\d\d:\d\d)\s+&(\w+)\s+(\w+)/;
 
 function onCloseFile(path) {
     if (path == currentArchive)

@@ -131,7 +131,12 @@ typedef enum {NOERR, RERR, WERR, CRCERR } Status;
  */
 typedef struct {
 	Byte comptype;		/* compression type */
+#ifdef __EMSCRIPTEN__
+	char name[28];		/* name of file, as UTF-8 (latin1_to_utf8), so
+				   each of its 13 characters can take two bytes */
+#else
 	char name[14];		/* name of file */
+#endif
 	Word complen;		/* compressed length */
 	Halfword date;		/* file creation date */
 	Halfword time;		/* file creation time */
